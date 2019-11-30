@@ -7,35 +7,35 @@ def runagent(A, T, R, I = 1, learningphase=True, nlearn = 1000, ntest = 100):
 
   J = 0
   if learningphase:
-          n = nlearn
+    n = nlearn
   else:
-          n = ntest
+    n = ntest
           
   st = I
   for ii in range(1,n):
-          aa = T[st][0]
-          if learningphase:
-                  a = A.selectactiontolearn(st,aa)
-          else:
-                  a = A.selectactiontoexecute(st,aa)
-          try:
-                  nst = T[st][0][a]
-          except:
-                  print(st,a)
-          r = R[st]
-          J += r
-          #print(st,nst,a,r)
+    aa = T[st][0]
+    if learningphase:
+      a = A.selectactiontolearn(st,aa)
+    else:
+      a = A.selectactiontoexecute(st,aa)
+    try:
+      nst = T[st][0][a]
+    except:
+      print(st,a)
+    r = R[st]
+    J += r
+    #print(st,nst,a,r)
 
-          if learningphase:
-                  A.learn(st,nst,a,r)
-          else:
-                  #print(st,nst,a,r)
-                  pass
-          
-          st = nst
+    if learningphase:
+      A.learn(st,nst,a,r)
+    else:
+      #print(st,nst,a,r)
+      pass
+    
+    st = nst
 
-          if not ii%15:
-                  st = I
+    if not ii%15:
+      st = I
   return J/n
         
 
