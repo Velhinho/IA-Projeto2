@@ -44,7 +44,7 @@ class LearningAgent:
 
 
   # this function is called after every action
-  # st - original state
+  # ost - original state
   # nst - next state
   # a - the index to the action taken
   # r - reward obtained

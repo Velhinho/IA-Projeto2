@@ -80,32 +80,31 @@ for nrep in range(0,NREP):
 
 print("exemplo 2")
 for nrep in range(0,NREP):
-        
-        A = LearningAgent(114,15)
+  A = LearningAgent(114,15)
 
-        T = AA[0]
-        R = [-1]*114
-        R[10] = 1
-        # T contains the list of possible next states
-        # T[14][0] - contains the possible next states of state 14
+  T = AA[0]
+  R = [-1]*114
+  R[10] = 1
+  # T contains the list of possible next states
+  # T[14][0] - contains the possible next states of state 14
 
 
-        print("# learning phase")
-        # in this phase your agent will learn about the world
-        # after these steps the agent will be tested
-        runagent(A, T, R, I = 1, learningphase=True, nlearn = 1000)
-        print("# testing phase")
-        # in this phase your agent will execute what it learned in the world
-        # the total reward obtained needs to be the optimal
-        Jn = runagent(A, T, R, I = 1, learningphase=False, ntest = 10)
-        val[2] += Jn
-        print("average reward",Jn)
-        print("# 2nd learning phase")
-        runagent(A, T, R, I = 1, learningphase=True, nlearn = 10000)
-        print("# testing phase")
-        Jn = runagent(A, T, R, I = 1, learningphase=False, ntest = 10)
-        val[3] += Jn
-        print("average reward",Jn)        
+  print("# learning phase")
+  # in this phase your agent will learn about the world
+  # after these steps the agent will be tested
+  runagent(A, T, R, I = 1, learningphase=True, nlearn = 1000)
+  print("# testing phase")
+  # in this phase your agent will execute what it learned in the world
+  # the total reward obtained needs to be the optimal
+  Jn = runagent(A, T, R, I = 1, learningphase=False, ntest = 10)
+  val[2] += Jn
+  print("average reward",Jn)
+  print("# 2nd learning phase")
+  runagent(A, T, R, I = 1, learningphase=True, nlearn = 10000)
+  print("# testing phase")
+  Jn = runagent(A, T, R, I = 1, learningphase=False, ntest = 10)
+  val[3] += Jn
+  print("average reward",Jn)        
 
 
 val = list([ii/NREP for ii in val])
@@ -116,6 +115,6 @@ print(cor)
 
 grade = 0
 for correct,mark in zip(cor,[3,7,3,7]):
-        if correct:
-                grade += mark
+  if correct:
+    grade += mark
 print("Grade in these tests (the final will also include hidden tests) : ", grade)        
