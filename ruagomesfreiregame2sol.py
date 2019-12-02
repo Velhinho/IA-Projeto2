@@ -42,7 +42,10 @@ class LearningAgent:
   # a - the index to the action in aa
   def selectactiontoexecute(self, st, aa):
     # print("select one action to see if I learned")
-    max_value = max(self.Q_table[st])
+    max_value = max(self.Q_table[st], default=None)
+    if(max_value == None):
+      return 0
+    
     a = self.Q_table[st].index(max_value)
 
     return a
