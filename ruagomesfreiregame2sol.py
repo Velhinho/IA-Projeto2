@@ -14,8 +14,12 @@ class LearningAgent:
     # A matrix with Q_table[state][action] = Q(s, a)
     self.Q_table = [[] for state in range(nS)]
 
-  def exploration_func(self, size_range):
-    return random.randint(0, size_range - 1)
+  def exploration_func(self, size_range, st):
+    epsilon = 0.25
+    if random.uniform(0, 1) < epsilon:
+      return random.randint(0, size_range - 1) # explore more actions
+    else:
+      return self.Q_table[st].index(max(self.Q_table[st])) # explore best action
 
   # Select one action, used when learning  
   # st - is the current state        
@@ -32,7 +36,7 @@ class LearningAgent:
     if(len(self.Q_table[st]) == 0):
       self.Q_table[st] = [0 for action in range(len(aa))]
 
-    return self.exploration_func(len(aa))
+    return self.exploration_func(len(aa), st)
 
   # Select one action, used when evaluating
   # st - is the current state        
@@ -47,7 +51,6 @@ class LearningAgent:
       return 0
     
     a = self.Q_table[st].index(max_value)
-
     return a
 
   # this function is called after every action
@@ -57,8 +60,8 @@ class LearningAgent:
   # r - reward obtained
   def learn(self, ost, nst, a, r):
     #print("learn something from this data")
-    learn_rate = 0.01
-    gamma = 0.9
+    learn_rate = 0.25
+    gamma = 0.75
 
     self.Q_table[ost][a] = self.Q_table[ost][a] + learn_rate \
         * (r + gamma * max(self.Q_table[nst], default=0) - self.Q_table[ost][a])
