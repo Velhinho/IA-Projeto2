@@ -60,8 +60,8 @@ class LearningAgent:
   # r - reward obtained
   def learn(self, ost, nst, a, r):
     #print("learn something from this data")
-    learn_rate = 0.25
-    gamma = 0.75
+    learn_rate = 0.1
+    gamma = 0.9
 
     self.Q_table[ost][a] = self.Q_table[ost][a] + learn_rate \
         * (r + gamma * max(self.Q_table[nst], default=0) - self.Q_table[ost][a])
