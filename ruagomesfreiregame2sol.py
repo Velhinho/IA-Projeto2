@@ -11,15 +11,22 @@ class LearningAgent:
   def __init__(self, nS, nA):
     self.nS = nS
     self.nA = nA  
+    # Number of times each action is to be explored
+    self.max_exp = 2
     # A matrix with Q_table[state][action] = Q(s, a)
     self.Q_table = [[] for state in range(nS)]
+    # A matrix with freq_table[state][action] = Nsa(state, action)
+    self.freq_table = [[] for state in range(nS)]
 
-  def exploration_func(self, size_range, st):
-    epsilon = 0.25
-    if random.uniform(0, 1) < epsilon:
-      return random.randint(0, size_range - 1) # explore more actions
-    else:
+  def exploration_func(self, st):
+    # Find an action that hasnt been explored yet
+    min_freq = min(self.freq_table[st])
+    a = self.freq_table[st].index(min_freq)
+
+    if min_freq >= self.max_exp:
       return self.Q_table[st].index(max(self.Q_table[st])) # explore best action
+    else:
+      return a
 
   # Select one action, used when learning  
   # st - is the current state        
@@ -36,7 +43,10 @@ class LearningAgent:
     if(len(self.Q_table[st]) == 0):
       self.Q_table[st] = [0 for action in range(len(aa))]
 
-    return self.exploration_func(len(aa), st)
+    if(len(self.freq_table[st]) == 0):
+      self.freq_table[st] = [0 for action in range(len(aa))]
+
+    return self.exploration_func(st)
 
   # Select one action, used when evaluating
   # st - is the current state        
@@ -60,9 +70,8 @@ class LearningAgent:
   # r - reward obtained
   def learn(self, ost, nst, a, r):
     #print("learn something from this data")
-    learn_rate = 0.1
+    self.freq_table[ost][a] += 1
     gamma = 0.9
-
-    self.Q_table[ost][a] = self.Q_table[ost][a] + learn_rate \
+    learn_rate = 1 / (1 + self.freq_table[ost][a])
+    self.Q_table[ost][a] += learn_rate \
         * (r + gamma * max(self.Q_table[nst], default=0) - self.Q_table[ost][a])
-
