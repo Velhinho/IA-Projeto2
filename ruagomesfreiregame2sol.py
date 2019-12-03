@@ -12,7 +12,7 @@ class LearningAgent:
     self.nS = nS
     self.nA = nA  
     # Number of times each action is to be explored
-    self.max_exp = 2
+    self.max_exp = 5
     # A matrix with Q_table[state][action] = Q(s, a)
     self.Q_table = [[] for state in range(nS)]
     # A matrix with freq_table[state][action] = Nsa(state, action)

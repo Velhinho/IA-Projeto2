@@ -19,7 +19,7 @@ def runagent(A, T, R, I = 1, learningphase=True, nlearn = 1000, ntest = 100):
     else:
       a = A.selectactiontoexecute(st,aa)
     try:
-      if random.randint(0, 10) == 0:
+      if random.randint(0, 9) == 0:
         a = random.randint(0, len(T[st][0]) - 1)
       nst = T[st][0][a]
     except:
